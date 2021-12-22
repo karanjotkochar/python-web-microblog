@@ -1,15 +1,18 @@
 # this code is running logic changed from video
+import os
 import datetime
 from logging import debug
 from flask import Flask, render_template, request
 from pymongo import MongoClient
 from werkzeug.utils import redirect
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def create_app():
     app = Flask(__name__)
-    client = MongoClient(
-        "mongodb+srv://blog_project:blog123@cluster0.hfxzv.mongodb.net/test")
+    client = MongoClient(os.environ.get("MONGODB_URI"))
     app.db = client.microblog
 
     @app.route("/", methods=["GET", "POST"])
